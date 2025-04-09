@@ -2,8 +2,6 @@ import { useRoutes } from "react-router-dom";
 import { routes } from "./routes";
 import ProtectedRoute from "../components/auth/ProtectedRoute";
 
-
-
 const renderRoutes = (routes) =>
   routes.map(({ path, element, children, protected: isProtected }, index) => {
     const wrappedElement = isProtected ? (

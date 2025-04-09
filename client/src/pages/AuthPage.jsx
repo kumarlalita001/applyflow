@@ -1,25 +1,26 @@
 import React from "react";
 import { Link, NavLink, Outlet } from "react-router-dom";
 import { Home } from "lucide-react";
+import Loader from "../components/common/Loader";
 
 console.log("AuthPage.jsx1");
 
 const AuthPage = () => {
   console.log("AuthPage.jsx2");
 
+  const isLoading = true;
+
   return (
     <div className="min-h-screen flex items-center justify-center  text-white">
       <div className="w-full border  border-gray-300 max-w-lg p-6 bg-white  rounded-lg text-gray-800">
         <Link to={"/"}>
-        <div  className="p-2 cursor-pointer text-black flex gap-2  justify-center items-center mb-4">
-          <div className="text-xl text-center  font-bold ">
-            Back to{" "}
+          <div className="p-2 cursor-pointer text-black flex gap-2  justify-center items-center mb-4">
+            <div className="text-xl text-center  font-bold ">Back to </div>
+            <button className="flex items-center cursor-pointer text-xl gap-2">
+              <Home className="w-6 h-6 cursor-pointer" />
+              Home
+            </button>
           </div>
-          <button className="flex items-center cursor-pointer text-xl gap-2">
-            <Home className="w-6 h-6 cursor-pointer" />
-            Home
-          </button>
-        </div>
         </Link>
         <div className="flex justify-center mb-6">
           <NavLink
@@ -57,6 +58,7 @@ const AuthPage = () => {
           <Outlet />
         </div>
       </div>
+      {isLoading && <Loader />}
     </div>
   );
 };
