@@ -1,22 +1,15 @@
 import { Router } from "express";
-import ApiError from "../utils/apiError.js";
-import ApiResponse from "../utils/ApiResponse.js";
+
+import { getCurrentUser, login, logout, register } from "../controllers/auth.controller.js";
+import { checkAuthentication } from "../middlewares/auth.middleware.js";
+
+
 
 const router = Router();
 
-router.get("/register", (req, res) => {
-  res
-    .status(200)
-    .json(
-      new ApiResponse(201, { name: "lalit" }, "Nice Successfully Registered")
-    );
-});
-router.route("/login").get((r, rs) => {
-  throw new ApiError(404, "Nice Error");
-
-  rs.status(200).send({
-    message: "success login",
-  });
-});
+router.route("/register").post(register);
+router.route("/login").post(login);
+router.route("/logout").post(logout);
+router.route("/check-auth").post(checkAuthentication,getCurrentUser);
 
 export default router;

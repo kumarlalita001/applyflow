@@ -19,7 +19,7 @@ app.use(express.static("public"));
 app.use(cookieParser());
 
 // Routes and error handlers
-app.use("/job-track/api/v0/", allRoutes);
+app.use("/applyflow/api/v0/", allRoutes);
 app.use(errorHandler);
 
 export default app;
