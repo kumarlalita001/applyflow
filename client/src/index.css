@@ -35,3 +35,12 @@ html {
     transform: rotate(360deg);
   }
 }
+
+
+td {
+  white-space: nowrap;
+
+}
+th {
+  white-space: nowrap;
+}

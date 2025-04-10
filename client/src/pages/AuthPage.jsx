@@ -3,12 +3,10 @@ import { Link, NavLink, Outlet } from "react-router-dom";
 import { Home } from "lucide-react";
 import Loader from "../components/common/Loader";
 
-console.log("AuthPage.jsx1");
+
 
 const AuthPage = () => {
-  console.log("AuthPage.jsx2");
 
-  const isLoading = true;
 
   return (
     <div className="min-h-screen flex items-center justify-center  text-white">
@@ -58,7 +56,7 @@ const AuthPage = () => {
           <Outlet />
         </div>
       </div>
-      {isLoading && <Loader />}
+    
     </div>
   );
 };

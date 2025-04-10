@@ -202,7 +202,7 @@ function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
+    <div className="min-h-screen  w-full bg-gray-50 flex">
       {/* Sidebar */}
       <div
         className={`fixed inset-y-0 left-0 z-30 w-64 bg-indigo-700 transform transition-transform duration-300 ease-in-out ${
@@ -238,12 +238,11 @@ function Dashboard() {
 
       {/* Main Content */}
       <div
-        className={`flex-1 ${
+        className={`flex-1 w-full ${
           sidebarOpen ? "ml-64" : "ml-0"
         } transition-margin duration-300 ease-in-out`}
       >
         {/* Top Bar */}
-
         <div className="bg-white  px-4 sm:px-4  shadow-sm">
           <div className="flex items-center justify-between h-16 px-4">
             <button
@@ -279,28 +278,29 @@ function Dashboard() {
           <FilterJob filterJobFn={filterJobFn} filters={filters}/>
 
           {/* Applications Table */}
-          <div className="bg-white rounded-lg shadow overflow-hidden">
-            <table className="min-w-full divide-y divide-gray-200">
+          <div className="bg-white w-full   rounded-lg shadow  ">
+            <div className="overflow-x-auto ">
+            <table className=" min-w-full divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left   text-xs  font-medium text-gray-500 uppercase tracking-wider">
                     Company
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left   text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Role
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left   text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Status
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left   text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Date Applied
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left   text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Actions
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
+              <tbody className="bg-white divide-y  divide-gray-200">
                 {paginatedApplications.map((application) => (
                   <tr key={application.id} className="hover:bg-gray-50">
                     <td className="px-6 py-4 whitespace-nowrap">
@@ -365,9 +365,10 @@ function Dashboard() {
                 ))}
               </tbody>
             </table>
+            </div>
 
             {/* Pagination */}
-            <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+            <div className="bg-white w-full px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
               <div className="flex-1 flex justify-between sm:hidden">
                 <button
                   onClick={() =>
