@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import { User } from "../models/user.model.js";
 import ApiError from "../utils/apiError.js";
-import asyncHandler from "../utils/asyncHandler.js";
+
 
 export const generateTokenAndSetToken = (userId, res) => {
   const token = jwt.sign({ userId }, process.env.JWT_SECRET, {
@@ -11,12 +11,12 @@ export const generateTokenAndSetToken = (userId, res) => {
   res.cookie("jwtToken", token, {
     httpOnly: true, // prevent XSS attacks cross-site scripting attacks
     secure: process.env.NODE_ENV !== "development",
-    sameSite: "strict", // CSRF attack protection
+    sameSite: "Strict", // CSRF attack protection
     maxAge: 15 * 24 * 60 * 60 * 1000, // 15 days
   });
 };
 
-export const register = asyncHandler( async ({ name, email, password }) => {
+export const register =  async ({ name, email, password }) => {
   //check for validations for empty
   if (!name || !email || !password) {
     throw new ApiError(400, "All fields are required");
@@ -35,16 +35,16 @@ export const register = asyncHandler( async ({ name, email, password }) => {
   await user.save();
 
   if (user) {
-    const userWithoutPassword = await User.findById(newUser._id).select(
+    const userWithoutPassword = await User.findById(user._id).select(
       "-password"
     );
     return userWithoutPassword;
   }
 
   throw new ApiError(500, "Internal Server Error in Register Service");
-});
+};
 
-export const login = asyncHandler( async ({ email, password }) => {
+export const login =  async ({ email, password }) => {
   const isRegisteredUser = await User.findOne({
     $or: [{ email }, { userName }],
   });
@@ -64,17 +64,17 @@ export const login = asyncHandler( async ({ email, password }) => {
   }
 
   throw new ApiError(500, "Internal Server Error in Login Service");
-});
+};
 
 
-export const getCurrentUser = asyncHandler(async ({req}) => {
+export const getCurrentUser = async ({req}) => {
     const user = await User.findById(req.user._id).select("-password");
   
     if (!user) {
       throw new ApiError(404, "User not found");
     }
     return user;
-  });
+  };
   
 
 

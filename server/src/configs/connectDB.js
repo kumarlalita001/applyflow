@@ -2,9 +2,9 @@ import mongoose from "mongoose";
 
 const connectDB = async () => {
   try {
-    const DB_NAME = "learn-mern";
+    const DB_NAME = "applyflow";
     const connectionInstance = await mongoose.connect(
-      `${process.env.MONGODB_URI}/${DB_NAME}`
+      `${process.env.MONGODB_URI}`
     );
     console.log(
       `\n MongoDB connected !! DB HOST: ${connectionInstance.connection.host}`

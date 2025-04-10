@@ -3,7 +3,7 @@ import * as authService from "../services/auth.service.js";
 import ApiResponse from "../utils/ApiResponse.js";
 import ApiError from "../utils/apiError.js";
 
-export const register = asyncHandler(async (req, res) => {
+export const register = asyncHandler(async (req, res, next) => {
   try {
     const user = await authService.register(req.body);
     authService.generateTokenAndSetToken(user._id, res);
@@ -13,7 +13,7 @@ export const register = asyncHandler(async (req, res) => {
       .json(new ApiResponse(201, user, "User Registered Successfully"));
   } catch (error) {
     console.log("Error in Register Controller", error);
-    throw new ApiError(error.statusCode, error.message);
+    next(new ApiError(error.statusCode, error.message));
   }
 });
 
