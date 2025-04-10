@@ -6,6 +6,8 @@ import cookieParser from "cookie-parser";
 
 const app = express();
 
+
+
 // all required middlewares
 app.options('*', cors({
   origin: 'http://localhost:5173',
@@ -23,6 +25,10 @@ app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 app.use(express.static("public"));
 app.use(cookieParser());
 
+
+app.get("/health",(req,res)=>{
+  res.send({message:"Everthing working fine"})
+})
 
 // Routes and error handlers
 app.use("/applyflow/api/v0/", allRoutes);
