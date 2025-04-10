@@ -7,7 +7,9 @@ export const checkAuthentication = asyncHandler(async (req, res, next) => {
   const token = req.headers.authorization?.split(" ")[1]; // either in headers 
   const jwtTokenPresentInCookie = req.cookies.jwtToken; // or from cookies
 
-  if (!jwtTokenPresentInCookie || !token) {
+  console.log("jwtToken",jwtTokenPresentInCookie);
+
+  if (!jwtTokenPresentInCookie ) {
     throw new ApiError(401, "Unauthorized! Please Login or Register First ");
   }
 
@@ -15,6 +17,8 @@ export const checkAuthentication = asyncHandler(async (req, res, next) => {
     jwtTokenPresentInCookie,
     process.env.JWT_SECRET
   );
+
+  console.log("decodedToken",decodedToken);
 
   if (!decodedToken) {
     throw new ApiError(
