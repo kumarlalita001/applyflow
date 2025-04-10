@@ -1,7 +1,7 @@
 import asyncHandler from "../utils/asyncHandler.js";
 import * as jobPostService from "../services/jobPost.service.js";
 import ApiError from "../utils/apiError.js";
-import ApiResponse from "../utils/ApiResponse.js";
+import ApiResponse from "../utils/apiResponse.js";
 
 export const createJob = asyncHandler(async (req, res) => {
   try {
