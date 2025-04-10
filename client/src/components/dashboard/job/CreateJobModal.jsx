@@ -1,37 +1,42 @@
 import React, { useState } from "react";
 import Loader from "../../common/Loader";
 import { ErrorToast, SuccessToast } from "../../../utils/Toast";
-import { putData } from "../../../api/axiosConfig"; // You can change it to patchData if needed
+import { postData } from "../../../api/axiosConfig";
 
-const EditJobModal = ({ existingData, onClose ,refetchFn}) => {
-  const [form, setForm] = useState({ ...existingData });
+const initialForm = {
+  company: "",
+  role: "",
+  status: "Applied",
+  appliedDate: "",
+  link: "",
+};
+
+const CreateJobModal = ({ onClose , refetchFn }) => {
+  const [form, setForm] = useState({ ...initialForm });
   const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
+    setForm({ ...form, [name]: value });
   };
 
-  console.log(form,"FormData");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
+   
 
+    setIsLoading(true);
     try {
-      const result = await putData(
-        `/api/v0/jobpost/${form._id}/`,
-        JSON.stringify(form)
-      );
-      console.log(result, "Updated result");
-      SuccessToast(result.message || "Job updated successfully!");
+      const result = await postData("/api/v0/jobpost/", JSON.stringify(form));
+      console.log(result, "result");
+      SuccessToast(result.message);
       onClose();
     } catch (error) {
-      ErrorToast(error.message || "Something went wrong while updating.");
+      ErrorToast(error.message);
     } finally {
       setIsLoading(false);
-      refetchFn(prev => !prev);
-    
+      refetchFn((prev) => !prev);
+     
     }
   };
 
@@ -42,13 +47,12 @@ const EditJobModal = ({ existingData, onClose ,refetchFn}) => {
           <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
         </div>
 
-        <div className="relative bg-white h-[80vh] md:h-fit overflow-y-auto rounded-lg shadow-xl w-full max-w-2xl p-6 z-10">
+        <div className="relative bg-white h-[80vh] md:h-fit overflow-y-auto rounded-lg shadow-xl w-full  max-w-2xl p-6 z-10">
           <h3 className="text-xl font-semibold text-gray-800 mb-6 border-b pb-2">
-            Edit Job Post
+            Add Job Post
           </h3>
-
           <form onSubmit={handleSubmit}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ">
               <div className="w-full">
                 <label className="block text-sm font-medium text-gray-700">
                   Company
@@ -60,6 +64,7 @@ const EditJobModal = ({ existingData, onClose ,refetchFn}) => {
                   onChange={handleChange}
                   className="mt-1 block w-full border rounded-md py-2 px-3 text-sm shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                 />
+               
               </div>
 
               <div className="w-full">
@@ -73,6 +78,7 @@ const EditJobModal = ({ existingData, onClose ,refetchFn}) => {
                   onChange={handleChange}
                   className="mt-1 block w-full border rounded-md py-2 px-3 text-sm shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                 />
+               
               </div>
 
               <div className="w-full">
@@ -82,14 +88,15 @@ const EditJobModal = ({ existingData, onClose ,refetchFn}) => {
                 <input
                   type="date"
                   name="appliedDate"
-                  value={form.appliedDate ? new Date(form.appliedDate).toISOString().split('T')[0] : ''}
+                  value={form.appliedDate}
                   onChange={handleChange}
                   className="mt-1 block w-full border rounded-md py-2 px-3 text-sm shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                 />
+               
               </div>
 
               <div className="w-full">
-                <label className="block  text-sm font-medium text-gray-700">
+                <label className="block text-sm font-medium text-gray-700">
                   Status
                 </label>
                 <select
@@ -98,12 +105,15 @@ const EditJobModal = ({ existingData, onClose ,refetchFn}) => {
                   onChange={handleChange}
                   className="mt-1 block w-full border rounded-md py-2 px-3 text-sm shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                 >
-                  {["Applied", "Interview", "Offer", "Rejected"].map((status) => (
-                    <option key={status} value={status}>
-                      {status}
-                    </option>
-                  ))}
+                  {["Applied", "Interview", "Offer", "Rejected"].map(
+                    (status) => (
+                      <option key={status} value={status}>
+                        {status}
+                      </option>
+                    )
+                  )}
                 </select>
+              
               </div>
 
               <div className="md:col-span-2">
@@ -117,12 +127,12 @@ const EditJobModal = ({ existingData, onClose ,refetchFn}) => {
                   onChange={handleChange}
                   className="mt-1 block w-full border rounded-md py-2 px-3 text-sm shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                 />
+               
               </div>
             </div>
 
             <div className="mt-6 flex justify-end space-x-3">
               <button
-                type="button"
                 onClick={onClose}
                 className="px-4 py-2 bg-gray-100 cursor-pointer text-gray-800 rounded-md hover:bg-gray-200 text-sm"
               >
@@ -143,4 +153,4 @@ const EditJobModal = ({ existingData, onClose ,refetchFn}) => {
   );
 };
 
-export default EditJobModal;
+export default CreateJobModal;

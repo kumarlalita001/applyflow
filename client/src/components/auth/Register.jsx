@@ -33,7 +33,6 @@ const Register = () => {
       console.log(result, "result");
       SuccessToast(result.message);
       localStorage.setItem("userData",JSON.stringify(result.data));
-
       navigate("/dashboard");
 
      // console.log(JSON.parse(localStorage.getItem("userData")));
