@@ -1,6 +1,7 @@
 import { Edit2, Eye, Trash2 } from "lucide-react";
 import React from "react";
 import { statusColors } from "../../../pages/Dashboard";
+import { shortenText } from "../../../utils/utils";
 
 const ShowJobTable = ({ jobs ,handleView, handleEdit, handleDelete}) => {
   return (
@@ -41,13 +42,13 @@ const ShowJobTable = ({ jobs ,handleView, handleEdit, handleDelete}) => {
                         rel="noopener noreferrer"
                         className="hover:text-indigo-600"
                       >
-                        {application.company}
+                        {shortenText(application.company,15)}
                       </a>
                     </div>
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {application.role}
+                  {shortenText(application.role,15)}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <span

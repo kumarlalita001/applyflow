@@ -1,5 +1,6 @@
 import React from 'react';
 import { statusColors } from '../../../pages/Dashboard';
+import { shortenText } from '../../../utils/utils';
 
 const ViewJobModal = ({ selectedApplication, closeViewJobModal }) => {
   return (
@@ -11,13 +12,13 @@ const ViewJobModal = ({ selectedApplication, closeViewJobModal }) => {
           {/* Company */}
           <div>
             <h4 className="text-sm text-gray-500">Company</h4>
-            <p className="text-base text-gray-800">{selectedApplication.company}</p>
+            <p className="text-base text-gray-800">{shortenText(selectedApplication.company,15)}</p>
           </div>
 
           {/* Role */}
           <div>
             <h4 className="text-sm text-gray-500">Role</h4>
-            <p className="text-base text-gray-800">{selectedApplication.role}</p>
+            <p className="text-base text-gray-800">{shortenText(selectedApplication.role,20)}</p>
           </div>
 
           {/* Status */}
@@ -49,7 +50,7 @@ const ViewJobModal = ({ selectedApplication, closeViewJobModal }) => {
               rel="noopener noreferrer"
               className="text-blue-600 hover:underline break-all"
             >
-              {selectedApplication.link}
+              {shortenText(selectedApplication.link,50)}
             </a>
           </div>
         </div>

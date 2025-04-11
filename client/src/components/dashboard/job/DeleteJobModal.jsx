@@ -69,7 +69,7 @@ const DeleteJobModal = ({ selectedApplication, onClose, refetchFn }) => {
       </div>
       {showUndo && (
         <div className="fixed inset-0 z-20 flex items-center justify-center bg-black/40">
-          <div className="bg-white rounded-lg shadow-lg p-6 w-[90%] max-w-sm text-center space-y-4 animate-fadeIn">
+          <div className="bg-white rounded-lg shadow-lg p-6 w-[90%] max-w-md text-center space-y-4 animate-fadeIn">
             <div className="flex justify-center">
               <Loader2 className="h-6 w-6 text-yellow-500 animate-spin" />
             </div>
@@ -79,7 +79,7 @@ const DeleteJobModal = ({ selectedApplication, onClose, refetchFn }) => {
             <p className="text-sm text-gray-600">Do you want to undo?</p>
             <button
               onClick={() => {
-                clearTimeout(pendingDeleteId);
+                clearTimeout(pendingDeleteId); // canceling the call
                 setShowUndo(false);
               }}
               className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
