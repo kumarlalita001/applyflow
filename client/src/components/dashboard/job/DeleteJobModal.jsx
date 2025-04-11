@@ -1,7 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Loader from "../../common/Loader";
 import { useDeleteJob } from "../../../hooks/job/useDeleteJob";
-import { Loader2, XCircle } from "lucide-react";
+import {
+  Loader2,
+  LoaderCircle,
+  LoaderIcon,
+  LoaderPinwheel,
+  XCircle,
+} from "lucide-react";
 import { shortenText } from "../../../utils/utils";
 
 const DeleteJobModal = ({ selectedApplication, onClose, refetchFn }) => {
@@ -21,25 +27,46 @@ const DeleteJobModal = ({ selectedApplication, onClose, refetchFn }) => {
     };
   }, [pendingDeleteId]);
 
+  const [seconds, setSeconds] = useState(5);
+  useEffect(() => {
+    console.log("I am called seconds", seconds);
+    if (!showUndo) {
+      return;
+    }
+    if (seconds <= 0) return;
+
+    console.log("i am called", seconds);
+    const timer = setTimeout(() => {
+      setSeconds((prev) => prev - 1);
+    }, 1000);
+
+
+    return () => clearTimeout(timer);
+  }, [ seconds,showUndo]);
+
   return (
-    <div className="fixed z-10 inset-0 flex items-center justify-center bg-black/40 bg-opacity-50">
-      <div className="bg-white relative rounded-lg w-full max-w-md p-6 shadow-lg">
+    <div className="fixed z-10 inset-0 flex p-6 items-center justify-center bg-black/40 bg-opacity-50">
+      <div className="bg-white relative  rounded-lg w-full max-w-md p-6 shadow-lg">
         <button className="absolute right-5 top-5 " onClick={onClose}>
           <XCircle className="w-5 h-5 cursor-pointer  text-gray-600 hover:text-black" />
         </button>
         <h2 className="text-xl font-semibold text-center text-gray-800 mb-10">
-          Are you sure ? <p className="text-lg text-gray-500 font-medium"> you want to delete this application?</p>
+          Are you sure ?{" "}
+          <p className="text-lg text-gray-500 font-medium">
+            {" "}
+            you want to delete this application?
+          </p>
         </h2>
 
         <div className="mt-4 space-y-2 text-sm text-gray-600">
           <div className="flex justify-between">
             <span className="font-medium">Company:</span>
-            <span>{ shortenText( selectedApplication.company,15)}</span>
+            <span>{shortenText(selectedApplication.company, 15)}</span>
           </div>
 
           <div className="flex justify-between">
             <span className="font-medium">Role:</span>
-            <span>{shortenText(selectedApplication.role,15)}</span>
+            <span>{shortenText(selectedApplication.role, 15)}</span>
           </div>
           <div className="flex justify-between">
             <span className="font-medium">Status:</span>
@@ -74,20 +101,21 @@ const DeleteJobModal = ({ selectedApplication, onClose, refetchFn }) => {
       </div>
       {showUndo && (
         <div className="fixed inset-0 z-20 flex items-center justify-center bg-black/40">
-          <div className="bg-white rounded-lg shadow-lg p-6 w-[90%] max-w-md text-center space-y-4 animate-fadeIn">
+          <div className="bg-white rounded-lg shadow-lg p-6 w-[90%] py-16 max-w-md text-center space-y-4 animate-fadeIn">
             <div className="flex justify-center">
-              <Loader2 className="h-6 w-6 text-yellow-500 animate-spin" />
+              <LoaderIcon className="h-6 w-6 text-black animate-spin" />
             </div>
             <p className="text-gray-800 font-medium">
-              Job will be deleted in 5 seconds.
+              Job will be deleted in {seconds} second{seconds !== 1 ? "s" : ""}.
             </p>
             <p className="text-sm text-gray-600">Do you want to undo?</p>
             <button
               onClick={() => {
                 clearTimeout(pendingDeleteId); // canceling the call
                 setShowUndo(false);
+                setSeconds(5); //for 5 second undo
               }}
-              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
+              className="px-4  py-2 cursor-pointer bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
             >
               Undo
             </button>
