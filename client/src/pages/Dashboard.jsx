@@ -190,9 +190,9 @@ function Dashboard() {
     // Fetch the analytics data when the component mounts
     const fetchAnalytics = async () => {
       try {
-        // const response = await getData("/api/v0/jobpost/getanalytics"); // Update API URL accordingly
+         // const response = await getData("/api/v0/jobpost/getanalytics"); // Update API URL accordingly
         // setAnalyticsData(response.data);
-        console.log(response.data,"dATA");
+       //   console.log(response.data,"dATA");
         
       } catch (err) {
         console.log(err);
