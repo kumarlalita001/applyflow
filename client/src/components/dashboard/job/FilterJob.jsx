@@ -3,11 +3,11 @@ import React from "react";
 
 const ToolTip = ({ title }) => {
   return (
-    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 z-10 whitespace-nowrap">
+    <div className="absolute bottom-full left-1/2 -translate-x-1/2   mb-2 z-10 whitespace-nowrap">
       <div className="relative bg-black text-white text-xs px-3 py-1 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200">
         {title}
         {/* Tooltip Arrow */}
-        <div className="absolute top-full left-1/2 -translate-x-1/2 w-2 h-2 rotate-45 bg-black"></div>
+        <div className="absolute top-full left-1/2 -translate-x-1/2  w-2 h-2 rotate-45 bg-black"></div>
       </div>
     </div>
   );
@@ -15,7 +15,7 @@ const ToolTip = ({ title }) => {
 
 const FilterJob = ({ filterJobFn, filters }) => {
   return (
-    <div className="bg-white p-4 rounded-lg shadow mb-6 grid grid-cols-1  md:grid-cols-4 gap-4">
+    <div className="bg-white p-4 rounded-lg shadow mb-6 grid grid-cols-1  xl:grid-cols-3 gap-4">
       <div className="relative inline-block  w-full group" title="search">
         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
         <input
@@ -30,11 +30,11 @@ const FilterJob = ({ filterJobFn, filters }) => {
         <ToolTip title={"Search..."} />
       </div>
 
-      <div className="relative w-full inline-block group">
+      <div className="relative  w-full md:w-fit  inline-block group ">
         <select
           title="Status"
           name="status"
-          className="border rounded-md w-full px-4 py-2"
+          className="border rounded-md w-full xl:w-fit px-4 py-[10px]"
           value={filters.status}
           onChange={filterJobFn}
         >
@@ -47,25 +47,25 @@ const FilterJob = ({ filterJobFn, filters }) => {
         <ToolTip title={"Status"} />
       </div>
 
-      <div className="flex flex-col w-full justify-start  md:flex-row gap-2">
-        <div className="relative w-full group">
+      <div className="flex flex-col w-full    md:justify-end   md:flex-row  gap-4 ">
+        <div className="relative group w-full md:w-1/2 xl:w-fit">
           <input
-           title="StartDate"
+            title="StartDate"
             name="startDate"
             type="date"
-            className="border rounded-md w-full md:w-fit px-4 py-2"
+            className="border rounded-md w-full px-4 py-2"
             value={filters.startDate}
             onChange={filterJobFn}
           />
           <ToolTip title={"Start Date"} />
         </div>
 
-        <div className="relative  group">
+        <div className="relative group w-full md:w-1/2 xl:w-fit">
           <input
-           title="EndDate"
+            title="EndDate"
             name="endDate"
             type="date"
-            className="border rounded-md w-full md:w-fit px-4 py-2"
+            className="border rounded-md w-full px-4 py-2"
             value={filters.endDate}
             onChange={filterJobFn}
           />

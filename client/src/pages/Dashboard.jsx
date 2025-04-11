@@ -219,7 +219,7 @@ function Dashboard() {
           logoutModalOpenFn={() => setShowLogoutModal(true)}
         />
 
-        <div className="py-8 px-4 sm:px-6 lg:px-8">
+        <div className="pt-8 px-4 sm:px-6 lg:px-8">
           <AnalyticsCard items={items} />
         </div>
 
