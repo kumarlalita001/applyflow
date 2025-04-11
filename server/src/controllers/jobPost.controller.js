@@ -111,9 +111,9 @@ export const getAnalytics = asyncHandler( async (req, res) => {
    
     res
     .status(200)
-    .json(new ApiResponse(200, analyticsData, " JobPost Deleted Successfully"));
+    .json(new ApiResponse(200, analyticsData, " JobPost Analytics Successfully"));
   } catch (error) {
-    console.log("Error in delete getJob Controller", error);
+    console.log("Error in  getJobAnalytics Controller", error);
     throw new ApiError(error.statusCode, error.message);
   }
 });

@@ -14,8 +14,8 @@ export const checkAuthentication = asyncHandler(async (req, res, next) => {
  
   const jwtTokenPresentInCookie = req.cookies.jwtToken ||  req.headers.authorization?.split(" ")[1];// or from cookies
 
-  console.log("tokenHeader",req.headers.authorization?.split(" ")[1]);
-  console.log("jwtToken",jwtTokenPresentInCookie);
+  // console.log("tokenHeader",req.headers.authorization?.split(" ")[1]);
+  // console.log("jwtToken",jwtTokenPresentInCookie);
 
   if (!jwtTokenPresentInCookie ) {
     throw new ApiError(401, "Unauthorized! Please Login or Register First ");
@@ -26,7 +26,7 @@ export const checkAuthentication = asyncHandler(async (req, res, next) => {
     process.env.JWT_SECRET
   );
 
-  console.log("decodedToken",decodedToken);
+ 
 
   if (!decodedToken) {
     throw new ApiError(
@@ -37,6 +37,7 @@ export const checkAuthentication = asyncHandler(async (req, res, next) => {
   }
 
   const user = await User.findById(decodedToken.userId).select("-password ");
+  console.log("UserName",user?.name);
 
   if (!user) {
     throw new ApiError(
