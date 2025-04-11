@@ -10,11 +10,11 @@ export const generateTokenAndSetToken = (userId, res) => {
 
   res.cookie("jwtToken", token, {
     httpOnly: true, // prevent XSS attacks cross-site scripting attacks
-    secure: process.env.NODE_ENV !== "development",
-    sameSite: "Strict", // CSRF attack protection
+    secure: true,
+    sameSite: "None", // CSRF attack protection
     maxAge: 15 * 24 * 60 * 60 * 1000, // 15 days
   });
-
+ //process.env.NODE_ENV !== "development"
   return token;
 };
 
