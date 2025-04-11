@@ -6,12 +6,16 @@ import cookieParser from "cookie-parser";
 
 const app = express();
 
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://applyflow-blush.vercel.app/',
+];
 
 // all required middlewares
-// app.options('*', cors({
-//   origin: 'http://localhost:5173',
-//   credentials: true,
-// }));
+app.options('*', cors({
+  origin: allowedOrigins,
+  credentials: true,
+}));
 
 // app.use(
 //   cors({
@@ -21,10 +25,7 @@ const app = express();
 // );
 
 
-const allowedOrigins = [
-  'http://localhost:5173',
-  'https://applyflow-blush.vercel.app/',
-];
+
 
 app.use(cors({
   origin: function (origin, callback) {
