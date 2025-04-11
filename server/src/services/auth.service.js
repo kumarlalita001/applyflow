@@ -55,7 +55,7 @@ export const register =  async ({ name, email, password }) => {
 
 export const login =  async ({ email, password }) => {
   const isRegisteredUser = await User.findOne({
-    $or: [{ email }, { userName }],
+    $or: [{ email }], // for user more such as username or any field 
   });
 
   if (!isRegisteredUser) {

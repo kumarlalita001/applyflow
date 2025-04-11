@@ -1,3 +1,9 @@
+import dotenv from "dotenv";
+// Load environment variables from.env file. You can use `dotenv.config()` to do this.
+dotenv.config({
+  path: "./.env",
+});
+
 import asyncHandler from "../utils/asyncHandler.js";
 import * as authService from "../services/auth.service.js";
 import ApiResponse from "../utils/apiResponse.js";
@@ -26,7 +32,9 @@ export const login = asyncHandler(async (req, res) => {
 
     res
       .status(201)
-      .json(new ApiResponse(201, { user, token }, "User Registered Successfully"));
+      .json(
+        new ApiResponse(201, { user, token }, "User Registered Successfully")
+      );
   } catch (error) {
     console.log("Error in Login Controller", error);
     throw new ApiError(error.statusCode, error.message);
@@ -36,9 +44,9 @@ export const login = asyncHandler(async (req, res) => {
 export const logout = asyncHandler(async (_req, res) => {
   try {
     const options = {
-      httpOnly: true,
+      httpOnly: true, // prevent XSS attacks cross-site scripting attacks
       secure: process.env.NODE_ENV !== "development",
-      sameSite: "strict",
+      sameSite: process.env.NODE_ENV !== "development" ? "None" : "Lax", // CSRF attack protection
     };
 
     res

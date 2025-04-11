@@ -5,7 +5,7 @@ import { checkAuthentication } from "../middlewares/auth.middleware.js";
 const router = Router();
 
 router.use(checkAuthentication);
-router.post('/',createJob);
+router.post('/',checkAuthentication,createJob);
 router.get('/', getJobs);
 router.get('/:id', getJobById);
 router.put('/:id', updateJob);
