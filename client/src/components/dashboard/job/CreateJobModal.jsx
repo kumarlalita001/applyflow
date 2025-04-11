@@ -1,6 +1,7 @@
 import React from "react";
 import Loader from "../../common/Loader";
 import useCreateJobForm from "../../../hooks/job/useCreateJob";
+import { XCircle } from "lucide-react";
 
 
 const CreateJobModal = ({ onClose , refetchFn }) => {
@@ -15,7 +16,13 @@ const CreateJobModal = ({ onClose , refetchFn }) => {
         </div>
 
         <div className="relative bg-white h-[80vh] md:h-fit overflow-y-auto rounded-lg shadow-xl w-full  max-w-2xl p-6 z-10">
-          <h3 className="text-xl font-semibold text-gray-800 mb-6 border-b pb-2">
+        <button
+            className="absolute right-5 top-5 "
+            onClick={onClose}
+          >
+            <XCircle className="w-5 h-5 cursor-pointer  text-gray-600 hover:text-black" />
+          </button>
+          <h3 className="text-xl text-center font-semibold text-gray-800 mb-6 border-b pb-2">
             Add Job Post
           </h3>
           <form onSubmit={handleSubmit}>

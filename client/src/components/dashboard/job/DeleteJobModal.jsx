@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Loader from "../../common/Loader";
 import { useDeleteJob } from "../../../hooks/job/useDeleteJob";
-import  { Loader2 } from "lucide-react";
+import { Loader2, XCircle } from "lucide-react";
+import { shortenText } from "../../../utils/utils";
 
 const DeleteJobModal = ({ selectedApplication, onClose, refetchFn }) => {
   const [showUndo, setShowUndo] = useState(false);
@@ -22,19 +23,23 @@ const DeleteJobModal = ({ selectedApplication, onClose, refetchFn }) => {
 
   return (
     <div className="fixed z-10 inset-0 flex items-center justify-center bg-black/40 bg-opacity-50">
-      <div className="bg-white rounded-lg w-full max-w-md p-6 shadow-lg">
-        <h2 className="text-lg font-semibold text-gray-800">
-          Are you sure you want to delete this application?
+      <div className="bg-white relative rounded-lg w-full max-w-md p-6 shadow-lg">
+        <button className="absolute right-5 top-5 " onClick={onClose}>
+          <XCircle className="w-5 h-5 cursor-pointer  text-gray-600 hover:text-black" />
+        </button>
+        <h2 className="text-xl font-semibold text-center text-gray-800 mb-10">
+          Are you sure ? <p className="text-lg text-gray-500 font-medium"> you want to delete this application?</p>
         </h2>
 
         <div className="mt-4 space-y-2 text-sm text-gray-600">
           <div className="flex justify-between">
             <span className="font-medium">Company:</span>
-            <span>{selectedApplication.company}</span>
+            <span>{ shortenText( selectedApplication.company,15)}</span>
           </div>
+
           <div className="flex justify-between">
             <span className="font-medium">Role:</span>
-            <span>{selectedApplication.role}</span>
+            <span>{shortenText(selectedApplication.role,15)}</span>
           </div>
           <div className="flex justify-between">
             <span className="font-medium">Status:</span>

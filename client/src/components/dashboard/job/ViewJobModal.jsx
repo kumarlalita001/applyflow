@@ -1,30 +1,44 @@
-import React from 'react';
-import { statusColors } from '../../../pages/Dashboard';
-import { shortenText } from '../../../utils/utils';
+import React from "react";
+import { statusColors } from "../../../pages/Dashboard";
+import { shortenText } from "../../../utils/utils";
+import { XCircle } from "lucide-react";
 
 const ViewJobModal = ({ selectedApplication, closeViewJobModal }) => {
   return (
     <div className="fixed z-10 inset-0 bg-black/40 bg-opacity-40 flex items-center justify-center">
-      <div className="bg-white rounded-xl h-[80vh] md:h-fit overflow-y-auto shadow-lg w-[90%] max-w-3xl p-6 relative">
-        <h2 className="text-xl font-semibold text-gray-800  mb-6 border-b pb-2">Application Details</h2>
+      <div className="bg-white rounded-xl  h-[80vh] md:h-fit overflow-y-auto shadow-lg w-[90%] max-w-3xl p-6 relative">
+        <button className="absolute right-5 top-5 " onClick={closeViewJobModal}>
+          <XCircle className="w-5 h-5 cursor-pointer  text-gray-600 hover:text-black" />
+        </button>
+        <h2 className="text-xl font-semibold text-center text-gray-800  mb-6 border-b pb-2">
+          Application Details
+        </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Company */}
           <div>
             <h4 className="text-sm text-gray-500">Company</h4>
-            <p className="text-base text-gray-800">{shortenText(selectedApplication.company,15)}</p>
+            <p className="text-base text-gray-800">
+              {shortenText(selectedApplication.company, 15)}
+            </p>
           </div>
 
           {/* Role */}
           <div>
             <h4 className="text-sm text-gray-500">Role</h4>
-            <p className="text-base text-gray-800">{shortenText(selectedApplication.role,20)}</p>
+            <p className="text-base text-gray-800">
+              {shortenText(selectedApplication.role, 20)}
+            </p>
           </div>
 
           {/* Status */}
           <div>
             <h4 className="text-sm text-gray-500">Status</h4>
-            <p className={`text-sm px-2 py-1 rounded-full inline-block ${statusColors[selectedApplication.status]}`}>
+            <p
+              className={`text-sm px-2 py-1 rounded-full inline-block ${
+                statusColors[selectedApplication.status]
+              }`}
+            >
               {selectedApplication.status}
             </p>
           </div>
@@ -33,11 +47,14 @@ const ViewJobModal = ({ selectedApplication, closeViewJobModal }) => {
           <div>
             <h4 className="text-sm text-gray-500">Applied On</h4>
             <p className="text-base text-gray-800">
-              {new Date(selectedApplication.appliedDate).toLocaleDateString('en-GB', {
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric',
-              })}
+              {new Date(selectedApplication.appliedDate).toLocaleDateString(
+                "en-GB",
+                {
+                  day: "numeric",
+                  month: "long",
+                  year: "numeric",
+                }
+              )}
             </p>
           </div>
 
@@ -50,7 +67,7 @@ const ViewJobModal = ({ selectedApplication, closeViewJobModal }) => {
               rel="noopener noreferrer"
               className="text-blue-600 hover:underline break-all"
             >
-              {shortenText(selectedApplication.link,50)}
+              {shortenText(selectedApplication.link, 50)}
             </a>
           </div>
         </div>

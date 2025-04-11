@@ -1,10 +1,9 @@
 import React from "react";
 import Loader from "../../common/Loader";
 import useEditJob from "../../../hooks/job/useEditJob";
+import { XCircle } from "lucide-react";
 
-const EditJobModal = ({ existingData, onClose ,refetchFn}) => {
-  
-
+const EditJobModal = ({ existingData, onClose, refetchFn }) => {
   const { form, isLoading, handleChange, handleSubmit } = useEditJob(
     existingData,
     onClose,
@@ -19,7 +18,13 @@ const EditJobModal = ({ existingData, onClose ,refetchFn}) => {
         </div>
 
         <div className="relative bg-white h-[80vh] md:h-fit overflow-y-auto rounded-lg shadow-xl w-full max-w-2xl p-6 z-10">
-          <h3 className="text-xl font-semibold text-gray-800 mb-6 border-b pb-2">
+          <button
+            className="absolute right-5 top-5 "
+            onClick={onClose}
+          >
+            <XCircle className="w-5 h-5 cursor-pointer  text-gray-600 hover:text-black" />
+          </button>
+          <h3 className="text-xl text-center font-semibold text-gray-800 mb-6 border-b pb-2">
             Edit Job Post
           </h3>
 
@@ -58,7 +63,11 @@ const EditJobModal = ({ existingData, onClose ,refetchFn}) => {
                 <input
                   type="date"
                   name="appliedDate"
-                  value={form.appliedDate ? new Date(form.appliedDate).toISOString().split('T')[0] : ''}
+                  value={
+                    form.appliedDate
+                      ? new Date(form.appliedDate).toISOString().split("T")[0]
+                      : ""
+                  }
                   onChange={handleChange}
                   className="mt-1 block w-full border rounded-md py-2 px-3 text-sm shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                 />
@@ -74,11 +83,13 @@ const EditJobModal = ({ existingData, onClose ,refetchFn}) => {
                   onChange={handleChange}
                   className="mt-1 block w-full border rounded-md py-2 px-3 text-sm shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                 >
-                  {["Applied", "Interview", "Offer", "Rejected"].map((status) => (
-                    <option key={status} value={status}>
-                      {status}
-                    </option>
-                  ))}
+                  {["Applied", "Interview", "Offer", "Rejected"].map(
+                    (status) => (
+                      <option key={status} value={status}>
+                        {status}
+                      </option>
+                    )
+                  )}
                 </select>
               </div>
 
