@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { deleteData } from '../../../api/axiosConfig';
 import { ErrorToast, SuccessToast } from '../../../utils/Toast';
+import Loader from '../../common/Loader';
 
 const DeleteJobModal = ({ selectedApplication, onClose,refetchFn }) => {
   const [loading, setLoading] = useState(false);
@@ -59,6 +60,7 @@ const DeleteJobModal = ({ selectedApplication, onClose,refetchFn }) => {
             {loading ? 'Deleting...' : 'Delete'}
           </button>
         </div>
+        {loading && <Loader/>}
       </div>
     </div>
   );
