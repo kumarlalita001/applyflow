@@ -1,26 +1,16 @@
-import React, { useState } from 'react';
-import { deleteData } from '../../../api/axiosConfig';
-import { ErrorToast, SuccessToast } from '../../../utils/Toast';
+import React from 'react';
 import Loader from '../../common/Loader';
+import { useDeleteJob } from '../../../hooks/job/useDeleteJob';
 
 const DeleteJobModal = ({ selectedApplication, onClose,refetchFn }) => {
-  const [loading, setLoading] = useState(false);
 
-  const handleDelete = async () => {
-    try {
-      setLoading(true);
-      const result = await deleteData(`/api/v0/jobpost/${selectedApplication._id}`);
-
+  const { loading, deleteJob } = useDeleteJob({
+    onSuccess: () => {
       refetchFn((prev) => !prev);
-      SuccessToast(result.message);
       onClose();
-    } catch (error) {
-      console.error('Delete failed:', err);
-      ErrorToast(error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+    },
+  });
+ 
 
   return (
     <div className="fixed z-10 inset-0 flex items-center justify-center bg-black/40 bg-opacity-50">
@@ -53,7 +43,7 @@ const DeleteJobModal = ({ selectedApplication, onClose,refetchFn }) => {
             Cancel
           </button>
           <button
-            onClick={handleDelete}
+            onClick={() => deleteJob(selectedApplication._id)}
             disabled={loading}
             className="px-4 py-2 text-sm cursor-pointer font-medium text-white bg-red-600 hover:bg-red-700 rounded-md transition"
           >

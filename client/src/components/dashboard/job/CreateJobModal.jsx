@@ -1,45 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import Loader from "../../common/Loader";
-import { ErrorToast, SuccessToast } from "../../../utils/Toast";
-import { postData } from "../../../api/axiosConfig";
+import useCreateJobForm from "../../../hooks/job/useCreateJob";
 
-const initialForm = {
-  company: "",
-  role: "",
-  status: "Applied",
-  appliedDate: "",
-  link: "",
-};
 
 const CreateJobModal = ({ onClose , refetchFn }) => {
-  const [form, setForm] = useState({ ...initialForm });
-  const [isLoading, setIsLoading] = useState(false);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setForm({ ...form, [name]: value });
-  };
-
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-   
-
-    setIsLoading(true);
-    try {
-      const result = await postData("/api/v0/jobpost/", JSON.stringify(form));
-      console.log(result, "result");
-      refetchFn((prev) => !prev);
-      SuccessToast(result.message);
-      onClose();
-    } catch (error) {
-      ErrorToast(error.message);
-    } finally {
-      setIsLoading(false);
-    
-     
-    }
-  };
+  const { form, isLoading, handleChange, handleSubmit } =
+    useCreateJobForm(onClose, refetchFn);
 
   return (
     <div className="fixed z-10 inset-0 overflow-y-auto">

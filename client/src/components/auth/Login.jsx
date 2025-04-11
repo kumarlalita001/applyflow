@@ -7,8 +7,8 @@ import { postData } from '../../api/axiosConfig';
 const Login = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [userData, setUserData] = useState({
-      email: "",
-      password: "",
+      email: "lalit@test.in",
+      password: "123456",
     });
     const navigate = useNavigate();
   

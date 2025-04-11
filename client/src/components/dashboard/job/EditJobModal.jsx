@@ -1,41 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import Loader from "../../common/Loader";
-import { ErrorToast, SuccessToast } from "../../../utils/Toast";
-import { putData } from "../../../api/axiosConfig"; // You can change it to patchData if needed
+import useEditJob from "../../../hooks/job/useEditJob";
 
 const EditJobModal = ({ existingData, onClose ,refetchFn}) => {
-  const [form, setForm] = useState({ ...existingData });
-  const [isLoading, setIsLoading] = useState(false);
+  
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
-  };
-
-  console.log(form,"FormData");
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
-
-    try {
-      const result = await putData(
-        `/api/v0/jobpost/${form._id}/`,
-        JSON.stringify(form)
-      );
-      console.log(result, "Updated result");
-      refetchFn(prev => !prev);
-      SuccessToast(result.message || "Job updated successfully!");
-      onClose();
-      
-    } catch (error) {
-      ErrorToast(error.message || "Something went wrong while updating.");
-    } finally {
-      setIsLoading(false);
-     
-    
-    }
-  };
+  const { form, isLoading, handleChange, handleSubmit } = useEditJob(
+    existingData,
+    onClose,
+    refetchFn
+  );
 
   return (
     <div className="fixed z-10 inset-0 overflow-y-auto">

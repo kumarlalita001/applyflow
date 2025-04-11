@@ -1,23 +1,4 @@
 import React, { useState, useMemo, useEffect } from "react";
-import {
-  Search,
-  Trash2,
-  Eye,
-  Edit2,
-  BriefcaseIcon,
-  Menu,
-  X,
-  Home,
-  Settings,
-  LogOut,
-  Bell,
-  ChevronLeft,
-  ChevronRight,
-  User,
-  HomeIcon,
-  User2,
-  PlusCircle,
-} from "lucide-react";
 import AnalyticsCard from "../components/dashboard/AnalyticsCard";
 
 import {
@@ -188,7 +169,16 @@ function Dashboard() {
   useEffect(() => {
     console.log("i am called");
     fetchJobs();
-  }, [filters, currentPage, refetch]);
+  }, [filters.endDate,filters.startDate,filters.status, currentPage, refetch]);
+
+  //debouncing seachEffect
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      fetchJobs();
+    }, 500); // delay
+  
+    return () => clearTimeout(timeout);
+  }, [filters.search]);
 
   useEffect(() => {
     // Fetch the analytics data when the component mounts
