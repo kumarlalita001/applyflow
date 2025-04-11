@@ -3,7 +3,7 @@ import { statusColors } from '../../../pages/Dashboard';
 
 const ViewJobModal = ({ selectedApplication, closeViewJobModal }) => {
   return (
-    <div className="fixed z-50 inset-0 bg-black/40 bg-opacity-40 flex items-center justify-center">
+    <div className="fixed z-10 inset-0 bg-black/40 bg-opacity-40 flex items-center justify-center">
       <div className="bg-white rounded-xl shadow-lg w-[90%] max-w-3xl p-6 relative">
         <h2 className="text-xl font-semibold text-gray-800 mb-6 border-b pb-2">Application Details</h2>
 

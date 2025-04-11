@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Loader from '../common/Loader';
 import { ErrorToast, SuccessToast } from '../../utils/Toast';
+import { postData } from '../../api/axiosConfig';
 
 const Login = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -24,10 +25,10 @@ const Login = () => {
       setIsLoading(true);
       try {
         const result = await postData(
-          "/api/v0/auth/register",
+          "/api/v0/auth/login",
           JSON.stringify(userData)
         );
-        console.log(result, "resultRegister");
+        console.log(result, "loginResult");
         SuccessToast(result.message);
         localStorage.setItem("userData",JSON.stringify(result.data.user));
         localStorage.setItem("applyflowtoken",JSON.stringify(result.data.token));
@@ -35,8 +36,8 @@ const Login = () => {
   
        // console.log(JSON.parse(localStorage.getItem("userData")));
       } catch (error) {
-        console.log("Register Error", error);
-        console.log("Register Error message", error.message);
+        console.log("login Error", error);
+        console.log("login Error message", error.message);
         ErrorToast(error.message);
        
       } finally {

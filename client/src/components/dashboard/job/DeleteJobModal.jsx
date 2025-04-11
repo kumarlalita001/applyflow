@@ -22,7 +22,7 @@ const DeleteJobModal = ({ selectedApplication, onClose,refetchFn }) => {
   };
 
   return (
-    <div className="fixed z-50 inset-0 flex items-center justify-center bg-black/40 bg-opacity-50">
+    <div className="fixed z-10 inset-0 flex items-center justify-center bg-black/40 bg-opacity-50">
       <div className="bg-white rounded-lg w-full max-w-md p-6 shadow-lg">
         <h2 className="text-lg font-semibold text-gray-800">
           Are you sure you want to delete this application?
