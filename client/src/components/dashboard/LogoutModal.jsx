@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { postData } from '../../api/axiosConfig';
-import { ErrorToast, SuccessToast } from '../../utils/Toast';
-import Loader from '../common/Loader';
-
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { postData } from "../../api/axiosConfig";
+import { ErrorToast, SuccessToast } from "../../utils/Toast";
+import Loader from "../common/Loader";
 
 const LogoutModal = ({ onClose }) => {
   const [loading, setLoading] = useState(false);
@@ -12,62 +11,50 @@ const LogoutModal = ({ onClose }) => {
   const handleLogout = async () => {
     try {
       setLoading(true);
-      const result = await postData('/api/v0/auth/logout'); // or your actual logout route
-      localStorage.removeItem('userData');
-      localStorage.removeItem('applyflowtoken');
+      const result = await postData("/api/v0/auth/logout"); // or your actual logout route
+      localStorage.removeItem("userData");
+      localStorage.removeItem("applyflowtoken");
       SuccessToast(result.message || "Logout Success");
       onClose();
-      navigate('/auth/login');
+      navigate("/auth/login");
     } catch (error) {
-      ErrorToast( error.message ||'Logout failed. Try again.');
+      ErrorToast(error.message || "Logout failed. Try again.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="fixed z-10 inset-0 min-h-screen w-full flex items-center justify-center">
-      <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-        <div className="fixed inset-0 transition-opacity" aria-hidden="true">
-          <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+    <div className="fixed inset-0 z-50 flex items-center w-full min-h-screen justify-center bg-black/50">
+      <div className="bg-white rounded-lg shadow-lg w-full max-w-md p-6 text-center space-y-4">
+        <h3 className="text-lg font-semibold text-gray-900">Logout</h3>
+        <p className="text-sm text-gray-600">
+          Are you sure you want to logout? You’ll need to login again to access
+          your applications.
+        </p>
+
+        <div className="flex justify-center gap-4 mt-4">
+          <button
+            onClick={handleLogout}
+            disabled={loading}
+            className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition disabled:opacity-50"
+          >
+            {loading ? "Logging out..." : "Logout"}
+          </button>
+          <button
+            onClick={onClose}
+            disabled={loading}
+            className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition disabled:opacity-50"
+          >
+            Cancel
+          </button>
         </div>
-        <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-          <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-            <div className="sm:flex sm:items-start">
-              <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                <h3 className="text-lg font-medium text-gray-900">
-                  Logout
-                </h3>
-                <div className="mt-2">
-                  <p className="text-sm text-gray-500">
-                    Are you sure you want to logout? You’ll need to login again to access your applications.
-                  </p>
-                </div>
-              </div>
-            </div>
+
+        {loading && (
+          <div className="flex justify-center mt-2">
+            <Loader className="w-5 h-5 text-gray-600 animate-spin" />
           </div>
-          <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-            <button
-              type="button"
-              className="w-full cursor-pointer inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
-              onClick={handleLogout}
-              disabled={loading}
-            >
-              {loading ? 'Logging out...' : 'Logout'}
-            </button>
-            <button
-              type="button"
-              className="mt-3 cursor-pointer w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-              onClick={onClose}
-              disabled={loading}
-            >
-              Cancel
-            </button>
-          </div>
-        </div>
-        {
-          loading && <Loader/>
-        }
+        )}
       </div>
     </div>
   );

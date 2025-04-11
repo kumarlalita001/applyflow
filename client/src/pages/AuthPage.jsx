@@ -3,8 +3,6 @@ import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import { Home } from "lucide-react";
 import Loader from "../components/common/Loader";
 
-
-
 const AuthPage = () => {
   const navigate = useNavigate();
   const isAuthenticated = JSON.parse(localStorage.getItem("userData"));
