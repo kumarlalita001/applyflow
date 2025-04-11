@@ -24,13 +24,15 @@ const EditJobModal = ({ existingData, onClose ,refetchFn}) => {
         JSON.stringify(form)
       );
       console.log(result, "Updated result");
+      refetchFn(prev => !prev);
       SuccessToast(result.message || "Job updated successfully!");
       onClose();
+      
     } catch (error) {
       ErrorToast(error.message || "Something went wrong while updating.");
     } finally {
       setIsLoading(false);
-      refetchFn(prev => !prev);
+     
     
     }
   };

@@ -11,8 +11,8 @@ const DeleteJobModal = ({ selectedApplication, onClose,refetchFn }) => {
       setLoading(true);
       const result = await deleteData(`/api/v0/jobpost/${selectedApplication._id}`);
 
+      refetchFn((prev) => !prev);
       SuccessToast(result.message);
-      refetchFn();
       onClose();
     } catch (error) {
       console.error('Delete failed:', err);

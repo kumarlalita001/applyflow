@@ -29,13 +29,14 @@ const CreateJobModal = ({ onClose , refetchFn }) => {
     try {
       const result = await postData("/api/v0/jobpost/", JSON.stringify(form));
       console.log(result, "result");
+      refetchFn((prev) => !prev);
       SuccessToast(result.message);
       onClose();
     } catch (error) {
       ErrorToast(error.message);
     } finally {
       setIsLoading(false);
-      refetchFn((prev) => !prev);
+    
      
     }
   };
