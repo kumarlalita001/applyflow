@@ -12,10 +12,10 @@ const app = express();
 // ];
 
 // all required middlewares
-app.options('*', cors({
-  origin: 'https://applyflow-blush.vercel.app/',
-  credentials: true,
-}));
+// app.options('*', cors({
+//   origin: 'https://applyflow-blush.vercel.app/',
+//   credentials: true,
+// }));
 
 app.use(
   cors({
