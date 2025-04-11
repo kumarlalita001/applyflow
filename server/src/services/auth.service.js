@@ -2,16 +2,17 @@ import jwt from "jsonwebtoken";
 import { User } from "../models/user.model.js";
 import ApiError from "../utils/apiError.js";
 
-
 export const generateTokenAndSetToken = (userId, res) => {
   const token = jwt.sign({ userId }, process.env.JWT_SECRET, {
-    expiresIn: "15d",
+    expiresIn: process.env.JWT_SECRET_EXPIRY,
   });
+
+
 
   res.cookie("jwtToken", token, {
     httpOnly: true, // prevent XSS attacks cross-site scripting attacks
-    secure: true,
-    sameSite: "None", // CSRF attack protection
+    secure: process.env.NODE_ENV !== "development" ,
+    sameSite: process.env.NODE_ENV !== "development" ? "None" : "Lex", // CSRF attack protection
     maxAge: 15 * 24 * 60 * 60 * 1000, // 15 days
   });
  //process.env.NODE_ENV !== "development"

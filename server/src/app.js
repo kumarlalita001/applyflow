@@ -6,23 +6,9 @@ import cookieParser from "cookie-parser";
 
 const app = express();
 
-// all required middlewares
-// app.options('*', cors({
-//   origin: 'https://applyflow-blush.vercel.app/',
-//   credentials: true,
-// }));
-
-// app.use(
-//   cors({
-//   origin: 'https://applyflow-blush.vercel.app/',
-//   credentials: true,
-// })
-// );
-
-
 const allowedOrigins = [
-  'http://localhost:5173',
-  'https://applyflow-blush.vercel.app',
+  process.env.CORS_ORIGIN1,
+  process.env.CORS_ORIGIN2
 ];
 
 
