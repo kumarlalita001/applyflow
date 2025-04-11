@@ -1,5 +1,6 @@
 import { Bell, LogOut, Menu, User2 } from 'lucide-react'
 import React from 'react'
+import { shortenText } from '../../utils/utils'
 
 
 const TopHeader = ({sidebarOpenCloseFn,logoutModalOpenFn}) => {
@@ -20,7 +21,7 @@ const TopHeader = ({sidebarOpenCloseFn,logoutModalOpenFn}) => {
               </button>
               <div className="flex items-center space-x-2">
                 <User2 />
-                <span className="text-gray-700 font-medium">{userData?.name}</span>
+                <span className="text-gray-700 font-medium">{shortenText(userData?.name+"100002342134",10)}</span>
                 <button
                   onClick={logoutModalOpenFn}
                   className="text-gray-500 cursor-pointer hover:text-gray-700"
