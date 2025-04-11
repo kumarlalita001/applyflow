@@ -1,13 +1,21 @@
-import React from "react";
-import { Link, NavLink, Outlet } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import { Home } from "lucide-react";
 import Loader from "../components/common/Loader";
 
 
 
 const AuthPage = () => {
+  const navigate = useNavigate();
+  const isAuthenticated = JSON.parse(localStorage.getItem("userData"));
 
-
+  useEffect(() => {
+    if(isAuthenticated){
+      console.log("isAuth",isAuthenticated);
+      navigate("/dashboard");
+    }
+  },[isAuthenticated])
+  
   return (
     <div className="min-h-screen flex items-center justify-center  text-white">
       <div className="w-full border  border-gray-300 max-w-lg p-6 bg-white  rounded-lg text-gray-800">
