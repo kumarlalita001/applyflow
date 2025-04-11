@@ -14,6 +14,8 @@ export const generateTokenAndSetToken = (userId, res) => {
     sameSite: "Strict", // CSRF attack protection
     maxAge: 15 * 24 * 60 * 60 * 1000, // 15 days
   });
+
+  return token;
 };
 
 export const register =  async ({ name, email, password }) => {

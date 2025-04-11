@@ -7,19 +7,35 @@ import cookieParser from "cookie-parser";
 const app = express();
 
 
-
 // all required middlewares
-app.options('*', cors({
-  origin: 'http://localhost:5173',
-  credentials: true,
-}));
-app.use(
-  cors({
-  origin: 'http://localhost:5173',
-  credentials: true,
-})
-);
+// app.options('*', cors({
+//   origin: 'http://localhost:5173',
+//   credentials: true,
+// }));
 
+// app.use(
+//   cors({
+//   origin: 'http://localhost:5173',
+//   credentials: true,
+// })
+// );
+
+
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://applyflow-blush.vercel.app/',
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
+}));
 app.use(express.json({ limit: "16kb" }));
 app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 app.use(express.static("public"));

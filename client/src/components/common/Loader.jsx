@@ -3,7 +3,7 @@ import React from "react";
 const Loader = () => {
   return (
     <div className="fixed inset-0 h-screen w-screen flex items-center justify-center bg-black/50  bg-opacity-50">
-      <span class="loader"></span>
+      <span className="loader"></span>
     </div>
    
   );

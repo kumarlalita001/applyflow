@@ -1,9 +1,11 @@
 import axios from "axios";
-
+const token = JSON.parse(localStorage.getItem("applyflowtoken"));
+console.log("applyFlowToken",token);
 const api = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
   headers: {
     "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`
   },
   withCredentials: true 
 });

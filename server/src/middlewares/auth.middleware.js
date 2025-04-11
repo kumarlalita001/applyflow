@@ -4,9 +4,10 @@ import ApiError from "../utils/apiError.js";
 import { User } from "../models/user.model.js";
 
 export const checkAuthentication = asyncHandler(async (req, res, next) => {
-  const token = req.headers.authorization?.split(" ")[1]; // either in headers 
-  const jwtTokenPresentInCookie = req.cookies.jwtToken; // or from cookies
+ 
+  const jwtTokenPresentInCookie = req.cookies.jwtToken ||  req.headers.authorization?.split(" ")[1];// or from cookies
 
+  console.log("tokenHeader",req.headers.authorization?.split(" ")[1]);
   console.log("jwtToken",jwtTokenPresentInCookie);
 
   if (!jwtTokenPresentInCookie ) {

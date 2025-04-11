@@ -6,11 +6,13 @@ import ApiError from "../utils/apiError.js";
 export const register = asyncHandler(async (req, res, next) => {
   try {
     const user = await authService.register(req.body);
-    authService.generateTokenAndSetToken(user._id, res);
+    const token = authService.generateTokenAndSetToken(user._id, res);
 
     res
       .status(201)
-      .json(new ApiResponse(201, user, "User Registered Successfully"));
+      .json(
+        new ApiResponse(201, { user, token }, "User Registered Successfully")
+      );
   } catch (error) {
     console.log("Error in Register Controller", error);
     next(new ApiError(error.statusCode, error.message));
@@ -20,11 +22,11 @@ export const register = asyncHandler(async (req, res, next) => {
 export const login = asyncHandler(async (req, res) => {
   try {
     const user = await authService.login(req.body);
-    authService.generateTokenAndSetToken(user._id, res);
+    const token = authService.generateTokenAndSetToken(user._id, res);
 
     res
       .status(201)
-      .json(new ApiResponse(201, user, "User Registered Successfully"));
+      .json(new ApiResponse(201, { user, token }, "User Registered Successfully"));
   } catch (error) {
     console.log("Error in Login Controller", error);
     throw new ApiError(error.statusCode, error.message);

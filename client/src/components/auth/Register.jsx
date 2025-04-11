@@ -6,7 +6,6 @@ import { ErrorToast, SuccessToast } from "../../utils/Toast";
 
 const Register = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
   const [userData, setUserData] = useState({
     name: "",
     email: "",
@@ -30,9 +29,10 @@ const Register = () => {
         "/api/v0/auth/register",
         JSON.stringify(userData)
       );
-      console.log(result, "result");
+      console.log(result, "resultRegister");
       SuccessToast(result.message);
-      localStorage.setItem("userData",JSON.stringify(result.data));
+      localStorage.setItem("userData",JSON.stringify(result.data.user));
+      localStorage.setItem("applyflowtoken",JSON.stringify(result.data.token));
       navigate("/dashboard");
 
      // console.log(JSON.parse(localStorage.getItem("userData")));
@@ -40,7 +40,7 @@ const Register = () => {
       console.log("Register Error", error);
       console.log("Register Error message", error.message);
       ErrorToast(error.message);
-      setError(error.message);
+     
     } finally {
       setIsLoading(false);
     }
@@ -55,6 +55,7 @@ const Register = () => {
               Name
             </label>
             <input
+             required
               name="name"
               value={userData.name}
               onChange={handleInputChange}
@@ -68,6 +69,7 @@ const Register = () => {
               Email Address
             </label>
             <input
+              required
               name="email"
               value={userData.email}
               onChange={handleInputChange}
@@ -81,6 +83,7 @@ const Register = () => {
               Password
             </label>
             <input
+              required
               name="password"
               value={userData.password}
               onChange={handleInputChange}

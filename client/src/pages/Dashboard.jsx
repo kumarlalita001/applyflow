@@ -67,7 +67,10 @@ export const statusColors = {
 };
 
 function Dashboard() {
-  const [jobs, setJobs] = useState(null);
+  const [jobs, setJobs] = useState({
+    "jobs": [],
+    "total": 0
+},);
   const [isLoading, setIsLoading] = useState(true);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
