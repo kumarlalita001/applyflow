@@ -17,7 +17,7 @@ export const register = asyncHandler(async (req, res, next) => {
     res
       .status(201)
       .json(
-        new ApiResponse(201, { user, token }, "User Registered Successfully")
+        new ApiResponse(201, { user, token }, "Registration Successfull")
       );
   } catch (error) {
     console.log("Error in Register Controller", error);
@@ -33,7 +33,7 @@ export const login = asyncHandler(async (req, res) => {
     res
       .status(201)
       .json(
-        new ApiResponse(201, { user, token }, "User Registered Successfully")
+        new ApiResponse(201, { user, token }, "Login Successfull")
       );
   } catch (error) {
     console.log("Error in Login Controller", error);
@@ -51,7 +51,7 @@ export const logout = asyncHandler(async (_req, res) => {
 
     res
       .clearCookie("jwtToken", options)
-      .json(new ApiResponse(200, {}, "User Log Out  Successfully"));
+      .json(new ApiResponse(200, {}, "Log Out  Successfull"));
   } catch (error) {
     console.log("Error in Logout Controller", error);
     throw new ApiError(error.statusCode, error.message);
