@@ -1,3 +1,9 @@
+import dotenv from "dotenv";
+// Load environment variables from.env file. You can use `dotenv.config()` to do this.
+dotenv.config({
+  path: "./.env",
+});
+
 import jwt from "jsonwebtoken";
 import { User } from "../models/user.model.js";
 import ApiError from "../utils/apiError.js";
@@ -12,7 +18,7 @@ export const generateTokenAndSetToken = (userId, res) => {
   res.cookie("jwtToken", token, {
     httpOnly: true, // prevent XSS attacks cross-site scripting attacks
     secure: process.env.NODE_ENV !== "development" ,
-    sameSite: process.env.NODE_ENV !== "development" ? "None" : "Lex", // CSRF attack protection
+    sameSite: process.env.NODE_ENV !== "development" ? "None" : "Lax", // CSRF attack protection
     maxAge: 15 * 24 * 60 * 60 * 1000, // 15 days
   });
  //process.env.NODE_ENV !== "development"

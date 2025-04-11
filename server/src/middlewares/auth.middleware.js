@@ -1,7 +1,14 @@
+import dotenv from "dotenv";
+// Load environment variables from.env file. You can use `dotenv.config()` to do this.
+dotenv.config({
+  path: "./.env",
+});
+
 import jwt from "jsonwebtoken";
 import asyncHandler from "../utils/asyncHandler.js";
 import ApiError from "../utils/apiError.js";
 import { User } from "../models/user.model.js";
+
 
 export const checkAuthentication = asyncHandler(async (req, res, next) => {
  

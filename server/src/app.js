@@ -3,6 +3,11 @@ import allRoutes from "./routes/z.index.allroutes.js";
 import errorHandler from "./utils/errorHandler.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import dotenv from "dotenv";
+// Load environment variables from.env file. You can use `dotenv.config()` to do this.
+dotenv.config({
+  path: "./.env",
+});
 
 const app = express();
 
@@ -10,6 +15,8 @@ const allowedOrigins = [
   process.env.CORS_ORIGIN1,
   process.env.CORS_ORIGIN2
 ];
+
+console.log(allowedOrigins,"allowedOrigin");
 
 
 app.use(cors({
