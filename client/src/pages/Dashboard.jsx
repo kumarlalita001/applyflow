@@ -20,30 +20,8 @@ import DashSidebar from "../components/dashboard/DashSidebar";
 import Pagination from "../components/dashboard/job/Pagination";
 import ShowJobTable from "../components/dashboard/job/ShowJobTable";
 import AddJobButton from "../components/dashboard/job/AddJobButton";
-
-const analyticsIssues = {};
-const items = [
-  {
-    name: "Applied",
-    numberOfItems: analyticsIssues?.total || 0,
-    icon: <SendHorizonalIcon className="text-blue-500 h-10 w-10" />,
-  },
-  {
-    name: "Rejected",
-    numberOfItems: analyticsIssues?.inProgress || 0,
-    icon: <ThumbsDownIcon className="text-red-500  h-10 w-10" />,
-  },
-  {
-    name: "Interview",
-    numberOfItems: analyticsIssues?.resolved || 0,
-    icon: <MessagesSquareIcon className="text-yellow-500  h-10 w-10" />,
-  },
-  {
-    name: "Offer",
-    numberOfItems: analyticsIssues?.invalidate || 0,
-    icon: <HandshakeIcon className="text-green-500  h-10 w-10" />,
-  },
-];
+import AnalyticsCardShimmer from "../components/dashboard/AnalyticsCardShimmer";
+import { ErrorToast } from "../utils/Toast";
 
 export const statusColors = {
   Applied: "bg-blue-100 text-blue-800",
@@ -74,38 +52,37 @@ function Dashboard() {
     endDate: "",
   });
 
-  const [analyticsIssues, setAnalyticsIssues] = useState({
+  const [analyticsJobs, setAnalyticsJobs] = useState({
     Applied: 0,
     Interview: 0,
     Offer: 0,
     Rejected: 0,
   });
-  console.log("analytics", analyticsIssues);
+
   const items = [
     {
       name: "Applied",
-      numberOfItems: analyticsIssues?.Applied || 0,
+      numberOfItems: analyticsJobs?.Applied || 0,
       icon: <SendHorizonalIcon className="text-blue-500 h-10 w-10" />,
     },
     {
       name: "Rejected",
-      numberOfItems: analyticsIssues?.Rejected || 0,
+      numberOfItems: analyticsJobs?.Rejected || 0,
       icon: <ThumbsDownIcon className="text-red-500  h-10 w-10" />,
     },
     {
       name: "Interview",
-      numberOfItems: analyticsIssues?.Interview || 0,
+      numberOfItems: analyticsJobs?.Interview || 0,
       icon: <MessagesSquareIcon className="text-yellow-500  h-10 w-10" />,
     },
     {
       name: "Offer",
-      numberOfItems: analyticsIssues?.Offer || 0,
+      numberOfItems: analyticsJobs?.Offer || 0,
       icon: <HandshakeIcon className="text-green-500  h-10 w-10" />,
     },
   ];
 
   const ITEMS_PER_PAGE = 5;
-
   const totalPages = Math.ceil(jobs?.total / ITEMS_PER_PAGE);
 
   // Delete application
@@ -160,7 +137,7 @@ function Dashboard() {
     } catch (error) {
       console.log(error);
       setIsLoading(false);
-      //  ErrorToast(error.message || "Failed to fetch jobs");
+      ErrorToast(error.message || "Failed to fetch jobs");
     } finally {
       setIsLoading(false);
     }
@@ -169,31 +146,42 @@ function Dashboard() {
   useEffect(() => {
     console.log("i am called");
     fetchJobs();
-  }, [filters.endDate,filters.startDate,filters.status, currentPage, refetch]);
+  }, [
+    filters.endDate,
+    filters.startDate,
+    filters.status,
+    currentPage,
+    refetch,
+  ]);
 
   //debouncing seachEffect
   useEffect(() => {
     const timeout = setTimeout(() => {
       fetchJobs();
     }, 500); // delay
-  
+
     return () => clearTimeout(timeout);
   }, [filters.search]);
 
+  const [isAnalyticsDataLoding, setIsAnalyticsDataLoding] = useState(true);
   useEffect(() => {
     // Fetch the analytics data when the component mounts
+    setIsAnalyticsDataLoding(true);
     const fetchAnalytics = async () => {
       try {
-        // const response = await getData("/api/v0/jobpost/getanalytics"); // Update API URL accordingly
-        // setAnalyticsData(response.data);
-        //   console.log(response.data,"dATA");
-      } catch (err) {
-        console.log(err);
+        const response = await getData("/api/v0/jobpost/jobanalytics"); // Update API URL accordingly
+        setAnalyticsJobs(response?.data);
+        console.log(response?.data, "adfasdf");
+      } catch (error) {
+        console.log(error);
+        ErrorToast(error.message || "Failed to fetch analytics data");
+      } finally {
+        setIsAnalyticsDataLoding(false);
       }
     };
 
     fetchAnalytics();
-  }, []);
+  }, [refetch]);
 
   const prevPageFn = () => setCurrentPage((page) => Math.max(1, page - 1));
   const nextPageFn = () =>
@@ -220,7 +208,11 @@ function Dashboard() {
         />
 
         <div className="pt-8 px-4 sm:px-6 lg:px-8">
-          <AnalyticsCard items={items} />
+          {isAnalyticsDataLoding ? (
+            <AnalyticsCardShimmer />
+          ) : (
+            <AnalyticsCard items={items} />
+          )}
         </div>
 
         <div className="py-8 px-4 sm:px-6 lg:px-8">
@@ -258,10 +250,7 @@ function Dashboard() {
 
       {/* Logout Modal */}
       {showLogoutModal && (
-        <LogoutModal
-          onClose={() => setShowLogoutModal(false)}
-         
-        />
+        <LogoutModal onClose={() => setShowLogoutModal(false)} />
       )}
 
       {/* Create Job Modal */}
