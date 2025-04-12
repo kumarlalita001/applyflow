@@ -16,7 +16,6 @@ import morgan from "morgan";
 const app = express();
 
 const allowedOrigins = [process.env.CORS_ORIGIN1, process.env.CORS_ORIGIN2];
-
 console.log(allowedOrigins, "allowedOrigin");
 app.use(
   cors({
@@ -33,7 +32,6 @@ app.use(
 );
 
 app.options("*", cors());
-
 app.use(
   helmet({
     crossOriginResourcePolicy: false, // allow loading images/videos/fonts from other domains

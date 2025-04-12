@@ -7,9 +7,11 @@ const router = Router();
 router.use(checkAuthentication);
 router.post('/',checkAuthentication,createJob);
 router.get('/', getJobs);
+router.get("/jobanalytics",getAnalytics);
 router.get('/:id', getJobById);
 router.put('/:id', updateJob);
 router.delete('/:id', deleteJob);
-router.get('/getanalytics',getAnalytics);
+
+
 
 export default router;
